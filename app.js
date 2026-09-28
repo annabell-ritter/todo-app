@@ -4,6 +4,7 @@ const form = document.getElementById("todo-form");
 const input = document.getElementById("todo-input");
 const list = document.getElementById("todo-list");
 const emptyState = document.getElementById("empty-state");
+const clearBtn = document.getElementById("clear-completed");
 
 let todos = loadTodos();
 
@@ -47,6 +48,7 @@ function render() {
   }
 
   emptyState.hidden = todos.length > 0;
+  clearBtn.hidden = !todos.some((t) => t.done);
 }
 
 function addTodo(text) {
@@ -69,6 +71,14 @@ function deleteTodo(id) {
   saveTodos();
   render();
 }
+
+function clearCompleted() {
+  todos = todos.filter((t) => !t.done);
+  saveTodos();
+  render();
+}
+
+clearBtn.addEventListener("click", clearCompleted);
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
